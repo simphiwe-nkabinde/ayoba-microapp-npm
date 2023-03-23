@@ -79,7 +79,7 @@ export function getUserCountryCode(successCb = null, errorCb = null) {
 export function getUserAyobaContacts(successCb = null, errorCb = null) {
     let ayobaContacts = ''
     try {
-        ayobaContacts = Ayoba.getAllContacts();
+        ayobaContacts = Ayoba.getContacts();
         if (typeof successCb == 'function') successCb(ayobaContacts)
     } catch (err) {
         if (typeof errorCb == 'function') errorCb(err)
@@ -133,6 +133,23 @@ export function getUserLanguageCode(successCb = null, errorCb = null) {
 export function shareUrl(url, successCb = null, errorCb = null) {
     try {
         Ayoba.shareUrl(url);
+        if (typeof successCb == 'function') successCb()
+    } catch (err) {
+        if (typeof errorCb == 'function') errorCb(err)
+        else throw err;
+    }
+}
+
+/**
+ * opens chat with an ayoba phone Number 
+ * @param {string} url string data to be shared
+ * @param {()=>{}} successCb callback function called if no errors
+ * @param {(err) => {}} errorCb callback function for handling error response
+ */
+export function startConversation(ayobaNumber, successCb = null, errorCb = null) {
+    if (!ayobaNumber) return
+    try {
+        Ayoba.startConversation(ayobaNumber);
         if (typeof successCb == 'function') successCb()
     } catch (err) {
         if (typeof errorCb == 'function') errorCb(err)
@@ -249,7 +266,8 @@ export function triggerSetCarrier() {
     }
 }
 /**
- * passes the user's network carrier to successCb
+ * passes the user's network carrier to successCb.
+ * *triggerSetCarrier() must be called before this function inorder to set the carrier value
  * @param {(carrier: string) => { }} successCb callback function for handling success response
  * @param {(err) => {}} errorCb callback function for handling error response
  */
@@ -273,7 +291,8 @@ export function triggerSetSecuredNumber() {
     }
 }
 /**
- * passes a user's encrypted phone number to successCb
+ * passes a user's encrypted phone number to successCb.
+ * *triggerSetSecuredNumber() must be called before this function inorder to set the secured number value
  * @param {(encryptedNumber: string) => { }} successCb callback function for handling success response
  * @param {(err) => {}} errorCb callback function for handling error response
  */
