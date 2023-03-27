@@ -35,17 +35,17 @@ console.log(Ayoba);
 
 /**
  * returns user's phone number
- * @param {(res:string) => {}} successCb callback function for handling success response
- * @param {(err) => {}} errorCb callback function for handling error response
+ * @param {(res:string) => {}} onsuccess callback function for handling success response
+ * @param {(err) => {}} onerror callback function for handling error response
  * @returns {string} country code
  */
-export function getUserPhoneNumber(successCb = null, errorCb = null) {
+export function getUserPhoneNumber(onsuccess = null, onerror = null) {
     let phoneNumber = '';
     try {
         phoneNumber = Ayoba.getMsisdn();
-        if (typeof successCb == 'function') successCb(phoneNumber)
+        if (typeof onsuccess == 'function') onsuccess(phoneNumber)
     } catch (err) {
-        if (typeof errorCb == 'function') errorCb(err)
+        if (typeof onerror == 'function') onerror(err)
         else throw err;
     }
     return phoneNumber;
@@ -54,17 +54,17 @@ export function getUserPhoneNumber(successCb = null, errorCb = null) {
 
 /**
  * returns user's country code
- * @param {(res:string) => {}} successCb callback function for handling success response
- * @param {(err) => {}} errorCb callback function for handling error response
+ * @param {(res:string) => {}} onsuccess callback function for handling success response
+ * @param {(err) => {}} onerror callback function for handling error response
  * @returns {string} country code
  */
-export function getUserCountryCode(successCb = null, errorCb = null) {
+export function getUserCountryCode(onsuccess = null, onerror = null) {
     let countryCode = ''
     try {
         countryCode = Ayoba.getCountry();
-        if (typeof successCb == 'function') successCb(countryCode)
+        if (typeof onsuccess == 'function') onsuccess(countryCode)
     } catch (err) {
-        if (typeof errorCb == 'function') errorCb(err)
+        if (typeof onerror == 'function') onerror(err)
         else console.error(err)
     }
     return countryCode
@@ -72,17 +72,17 @@ export function getUserCountryCode(successCb = null, errorCb = null) {
 
 /**
  * returns user's ayoba registered contacts
- * @param {(res) => {}} successCb callback function for handling success response
- * @param {(err) => {}} errorCb callback function for handling error response
+ * @param {(res) => {}} onsuccess callback function for handling success response
+ * @param {(err) => {}} onerror callback function for handling error response
  * @returns {string} JSON object: [ {name:string, phoneNumber: string}, . . . ]
  */
-export function getUserAyobaContacts(successCb = null, errorCb = null) {
+export function getUserAyobaContacts(onsuccess = null, onerror = null) {
     let ayobaContacts = ''
     try {
         ayobaContacts = Ayoba.getContacts();
-        if (typeof successCb == 'function') successCb(ayobaContacts)
+        if (typeof onsuccess == 'function') onsuccess(ayobaContacts)
     } catch (err) {
-        if (typeof errorCb == 'function') errorCb(err)
+        if (typeof onerror == 'function') onerror(err)
         else throw err;
     }
     return ayobaContacts
@@ -90,17 +90,17 @@ export function getUserAyobaContacts(successCb = null, errorCb = null) {
 
 /**
  * returns all user's contacts
- * @param {(res) => {}} successCb callback function for handling success response
- * @param {(err) => {}} errorCb callback function for handling error response
+ * @param {(res) => {}} onsuccess callback function for handling success response
+ * @param {(err) => {}} onerror callback function for handling error response
  * @returns {string} JSON object: [ {name:string, phoneNumber: string}, . . . ]
  */
-export function getAllUserContacts(successCb = null, errorCb = null) {
+export function getAllUserContacts(onsuccess = null, onerror = null) {
     let allContacts = ''
     try {
         allContacts = Ayoba.getAllContacts();
-        if (typeof successCb == 'function') successCb(allContacts)
+        if (typeof onsuccess == 'function') onsuccess(allContacts)
     } catch (err) {
-        if (typeof errorCb == 'function') errorCb(err)
+        if (typeof onerror == 'function') onerror(err)
         else throw err;
     }
     return allContacts
@@ -108,17 +108,17 @@ export function getAllUserContacts(successCb = null, errorCb = null) {
 
 /**
  * returns user's language code
- * @param {(res:string) => {}} successCb callback function for handling success response
- * @param {(err) => {}} errorCb callback function for handling error response
+ * @param {(res:string) => {}} onsuccess callback function for handling success response
+ * @param {(err) => {}} onerror callback function for handling error response
  * @returns {string} user language code
  */
-export function getUserLanguageCode(successCb = null, errorCb = null) {
+export function getUserLanguageCode(onsuccess = null, onerror = null) {
     let lang = ''
     try {
         lang = Ayoba.getLanguage();
-        if (typeof successCb == 'function') successCb(lang)
+        if (typeof onsuccess == 'function') onsuccess(lang)
     } catch (err) {
-        if (typeof errorCb == 'function') errorCb(err)
+        if (typeof onerror == 'function') onerror(err)
         else throw err;
     }
     return lang
@@ -127,32 +127,28 @@ export function getUserLanguageCode(successCb = null, errorCb = null) {
 /**
  * opens a dialogue to share url string
  * @param {string} url string data to be shared
- * @param {()=>{}} successCb callback function called if no errors
- * @param {(err) => {}} errorCb callback function for handling error response
+ * @param {(err) => {}} onerror callback function for handling error response
  */
-export function shareUrl(url, successCb = null, errorCb = null) {
+export function shareUrl(url, onerror = null) {
     try {
         Ayoba.shareUrl(url);
-        if (typeof successCb == 'function') successCb()
     } catch (err) {
-        if (typeof errorCb == 'function') errorCb(err)
+        if (typeof onerror == 'function') onerror(err)
         else throw err;
     }
 }
 
 /**
  * opens chat with an ayoba phone Number 
- * @param {string} url string data to be shared
- * @param {()=>{}} successCb callback function called if no errors
- * @param {(err) => {}} errorCb callback function for handling error response
+ * @param {string} ayobaNumber string data to be shared
+ * @param {(err) => {}} onerror callback function for handling error response
  */
-export function startConversation(ayobaNumber, successCb = null, errorCb = null) {
+export function startConversation(ayobaNumber, onerror = null) {
     if (!ayobaNumber) return
     try {
-        Ayoba.startConversation(ayobaNumber);
-        if (typeof successCb == 'function') successCb()
+        Ayoba.startConversation(ayobaNumber)
     } catch (err) {
-        if (typeof errorCb == 'function') errorCb(err)
+        if (typeof onerror == 'function') onerror(err)
         else throw err;
     }
 }
@@ -171,26 +167,26 @@ export function closeApp() {
 /**
  * initiate payment process.
  * @param {{method:string, amount:Number, currency: string, description?: string }} payload object containing payment details
- * @param {(payload: {transactionId:string, status: string, error:any}) => {}} successCb callback function for handling success response 
- * @param {(err) => {}} errorCb callback function for handling error response
+ * @param {(payload: {transactionId:string, status: string, error:any}) => {}} onsuccess callback function for handling success response 
+ * @param {(err) => {}} onerror callback function for handling error response
  */
-export function startPayment(payload, successCb = null, errorCb = null) {
+export function startPayment(payload, onerror = null) {
     try {
         const { method, amount, currency, description } = payload
         Ayoba.startPayment(method, amount, currency, description);
-        if (typeof successCb == 'function') successCb()
+        if (typeof onsuccess == 'function') onsuccess()
     } catch (err) {
-        if (typeof errorCb == 'function') return errorCb(err)
+        if (typeof onerror == 'function') return onerror(err)
         else throw err;
     }
 }
 
-export function sendGenericEvent(event, successCb = null, errorCb = null) {
+export function sendGenericEvent(event, onsuccess = null, onerror = null) {
     try {
         Ayoba.sendGenericEvent(event);
-        if (typeof successCb == 'function') successCb()
+        if (typeof onsuccess == 'function') onsuccess()
     } catch (err) {
-        if (typeof errorCb == 'function') return errorCb(err)
+        if (typeof onerror == 'function') return onerror(err)
         else throw err;
     }
 }
@@ -204,54 +200,54 @@ const carrierSubject = new Subject()
 const securedMsisdnSubject = new Subject()
 
 /**
- * passes an observed realtime location value to successCb
- * @param {({lon: string, lat: string}) => { }} successCb callback function for handling success response
- * @param {(err) => {}} errorCb callback function for handling error response
+ * passes the user's observed realtime location to onchange callback
+ * @param {(location: {lon: string, lat: string}) => { }} onchange callback function. receives location value
+ * @param {(err) => {}} onerror callback function for handling error response
  */
-export function getUserLocation(successCb, errorCb = null) {
+export function observeUserLocation(onchange, onerror = null) {
     try {
-        if (typeof successCb == 'function') locationSubject.subscribe({next: (v) => successCb(v)})
+        if (typeof onchange == 'function') locationSubject.subscribe({next: (v) => onchange(v)})
     } catch (err) {
-        if (typeof errorCb == 'function') errorCb(err)
+        if (typeof onerror == 'function') onerror(err)
         else throw err
     }
 }
 /**
- * passes an observed realtime user-presence value to successCb
- * @param {(online: 0|1) => { }} successCb callback function for handling success response
- * @param {(err) => {}} errorCb callback function for handling error response
+ * passes the user's observed realtime presence to onchange callback
+ * @param {(online: 0|1) => { }} onchange callback function. receives user presence
+ * @param {(err) => {}} onerror callback function for handling error response
  */
-export function getUserPresence(successCb, errorCb = null) {
+export function observeUserPresence(onchange, onerror = null) {
     try {
-        if (typeof successCb == 'function') presenceSubject.subscribe({next: (v) => successCb(v)})
+        if (typeof onchange == 'function') presenceSubject.subscribe({next: (v) => onchange(v)})
     } catch (err) {
-        if (typeof errorCb == 'function') errorCb(err)
+        if (typeof onerror == 'function') onerror(err)
         else throw err
     }
 }
 /**
- * passes a username to successCb
- * @param {(username: string) => { }} successCb callback function for handling success response
- * @param {(err) => {}} errorCb callback function for handling error response
+ * passes a username to onsuccess
+ * @param {(username: string) => { }} onsuccess callback function for handling success response
+ * @param {(err) => {}} onerror callback function for handling error response
  */
-export function getUserName(successCb, errorCb = null) {
+export function getUserName(onsuccess, onerror = null) {
     try {
-        if (typeof successCb == 'function') nicknameSubject.subscribe({next: (v) => successCb(v)})
+        if (typeof onsuccess == 'function') nicknameSubject.subscribe({next: (v) => onsuccess(v)})
     } catch (err) {
-        if (typeof errorCb == 'function') errorCb(err)
+        if (typeof onerror == 'function') onerror(err)
         else throw err
     }
 }
 /**
- * passes an image url to successCb
- * @param {(imageUrl: string) => { }} successCb callback function for handling success response
- * @param {(err) => {}} errorCb callback function for handling error response
+ * passes an image url to onsuccess
+ * @param {(imageUrl: string) => { }} onsuccess callback function for handling success response
+ * @param {(err) => {}} onerror callback function for handling error response
  */
-export function getUserAvatar(successCb, errorCb = null) {
+export function getUserAvatar(onsuccess, onerror = null) {
     try {
-        if (typeof successCb == 'function') avatarSubject.subscribe({next: (v) => successCb(v)})
+        if (typeof onsuccess == 'function') avatarSubject.subscribe({next: (v) => onsuccess(v)})
     } catch (err) {
-        if (typeof errorCb == 'function') errorCb(err)
+        if (typeof onerror == 'function') onerror(err)
         else throw err
     }
 }
@@ -266,16 +262,16 @@ export function triggerSetCarrier() {
     }
 }
 /**
- * passes the user's network carrier to successCb.
+ * passes the user's network carrier to onsuccess.
  * *triggerSetCarrier() must be called before this function inorder to set the carrier value
- * @param {(carrier: string) => { }} successCb callback function for handling success response
- * @param {(err) => {}} errorCb callback function for handling error response
+ * @param {(carrier: string) => { }} onsuccess callback function for handling success response
+ * @param {(err) => {}} onerror callback function for handling error response
  */
-export function getUserCarrier(successCb, errorCb = null) {
+export function getUserCarrier(onsuccess, onerror = null) {
     try {
-        if (typeof successCb == 'function') carrierSubject.subscribe({next: (v) => successCb(v)})
+        if (typeof onsuccess == 'function') carrierSubject.subscribe({next: (v) => onsuccess(v)})
     } catch (err) {
-        if (typeof errorCb == 'function') errorCb(err)
+        if (typeof onerror == 'function') onerror(err)
         else throw err
     }
 }
@@ -291,16 +287,16 @@ export function triggerSetSecuredNumber() {
     }
 }
 /**
- * passes a user's encrypted phone number to successCb.
+ * passes a user's encrypted phone number to onsuccess.
  * *triggerSetSecuredNumber() must be called before this function inorder to set the secured number value
- * @param {(encryptedNumber: string) => { }} successCb callback function for handling success response
- * @param {(err) => {}} errorCb callback function for handling error response
+ * @param {(encryptedNumber: string) => { }} onsuccess callback function for handling success response
+ * @param {(err) => {}} onerror callback function for handling error response
  */
-export function getUserSecuredNumber(successCb, errorCb = null) {
+export function getUserSecuredNumber(onsuccess, onerror = null) {
     try {
-        if (typeof successCb == 'function') securedMsisdnSubject.subscribe({next: (v) => successCb(v)})
+        if (typeof onsuccess == 'function') securedMsisdnSubject.subscribe({next: (v) => onsuccess(v)})
     } catch (err) {
-        if (typeof errorCb == 'function') errorCb(err)
+        if (typeof onerror == 'function') onerror(err)
         else throw err
     }
 }
